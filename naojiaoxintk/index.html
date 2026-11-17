@@ -1,0 +1,929 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>挠脚心tk恶魔刑房-互动玩法与规则拆解</title>
+<meta name="description" content="挠脚心tk恶魔刑房是一个以脚心敏感度为核心的互动玩法合集，整理刑房场景设定、敏感度分级、限时挑战规则、安全边界与玩家实测反馈，帮助新手快速理解玩法结构并找到适合自己的难度档位。">
+<meta name="keywords" content="挠脚心tk恶魔刑房">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23241a2e'/%3E%3Cpath d='M20 18c8-4 22-3 26 8 3 8-2 18-9 22-6 3-13 2-16-3-3-6 0-11 4-15 5-5 9-9 5-13-3-3-7-1-10 1z' fill='%23e8a33d'/%3E%3Ccircle cx='42' cy='22' r='3' fill='%23fff'/%3E%3C/svg%3E">
+<style>
+:root{
+--bg:#140f1c;
+--bg-soft:#1d1628;
+--panel:#241a2e;
+--panel-2:#2c2138;
+--line:#3d3050;
+--text:#efe8f5;
+--muted:#b3a4c4;
+--dim:#8a7a9d;
+--main:#e8a33d;
+--main-soft:#f0c27a;
+--accent:#c65f8a;
+--ok:#6fbf9a;
+--warn:#e06a5a;
+--radius:14px;
+--radius-sm:8px;
+--shadow:0 8px 24px rgba(0,0,0,.35);
+--font:"PingFang SC","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif;
+--sticky-h:0px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:112px}
+body{
+margin:0;
+background:var(--bg);
+color:var(--text);
+font-family:var(--font);
+font-size:16px;
+line-height:1.75;
+-webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+a{color:var(--main-soft);text-decoration:none}
+a:hover{text-decoration:underline}
+h1,h2,h3,h4{line-height:1.3;margin:0 0 .6em}
+h1{font-size:clamp(1.7rem,4.2vw,2.6rem)}
+h2{font-size:clamp(1.3rem,2.6vw,1.7rem)}
+h3{font-size:1.1rem}
+p{margin:0 0 1em}
+ul,ol{margin:0 0 1em;padding-left:1.3em}
+.wrap{width:min(1200px,100% - 2rem);margin-inline:auto}
+.section{padding:44px 0;scroll-margin-top:112px}
+.section + .section{border-top:1px solid var(--line)}
+.sec-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+.sec-head .tag{font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--main);border:1px solid var(--main);padding:2px 8px;border-radius:999px}
+.sec-head .sub{color:var(--dim);font-size:.9rem}
+.lead{color:var(--muted)}
+.kw-chip{display:inline-block;font-size:.78rem;border:1px solid var(--line);border-radius:999px;padding:3px 10px;margin:0 6px 6px 0;color:var(--main-soft);background:rgba(232,163,61,.07)}
+/* 公告条 */
+.announce{
+background:linear-gradient(90deg,#3a2333,#2a2038);
+border-bottom:1px solid var(--line);
+font-size:.85rem;
+color:var(--muted);
+}
+.announce .wrap{display:flex;gap:10px;align-items:center;padding:8px 0;flex-wrap:wrap}
+.announce .dot{width:8px;height:8px;border-radius:50%;background:var(--main);box-shadow:0 0 0 3px rgba(232,163,61,.18);flex:none}
+.announce strong{color:var(--main-soft)}
+.announce a{margin-left:auto}
+/* 页头 */
+.site-head{
+position:sticky;top:0;z-index:60;
+background:rgba(20,15,28,.94);
+backdrop-filter:blur(10px);
+border-bottom:1px solid var(--line);
+}
+.head-inner{display:flex;align-items:center;gap:18px;padding:12px 0;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;color:var(--text)}
+.brand:hover{text-decoration:none}
+.brand svg{flex:none}
+.brand-name{font-weight:700;letter-spacing:.02em;font-size:1.02rem}
+.nav{display:flex;gap:4px;flex-wrap:wrap;margin-left:auto}
+.nav a{
+padding:7px 11px;border-radius:999px;color:var(--muted);font-size:.9rem;border:1px solid transparent;
+}
+.nav a:hover,.nav a:focus-visible{background:var(--panel);color:var(--text);text-decoration:none;border-color:var(--line)}
+.nav a:focus-visible{outline:2px solid var(--main);outline-offset:2px}
+.head-actions{display:flex;gap:8px;align-items:center}
+.search{display:flex;align-items:center;gap:6px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:4px 6px 4px 12px}
+.search input{
+background:transparent;border:0;color:var(--text);font-size:.88rem;width:140px;padding:4px 0;font-family:inherit;
+}
+.search input:focus{outline:none}
+.search input::placeholder{color:var(--dim)}
+.search button{
+background:var(--main);border:0;color:#241a2e;font-weight:700;font-size:.82rem;border-radius:999px;padding:5px 12px;cursor:pointer;font-family:inherit;
+}
+.search button:hover{background:var(--main-soft)}
+.menu-btn{display:none;background:var(--panel);border:1px solid var(--line);color:var(--text);border-radius:8px;padding:7px 12px;font-family:inherit;font-size:.88rem;cursor:pointer}
+.menu-btn:focus-visible{outline:2px solid var(--main);outline-offset:2px}
+.search-feedback{width:100%;font-size:.84rem;color:var(--accent);min-height:0}
+.search-feedback:empty{display:none}
+/* 首屏 */
+.hero{position:relative;overflow:hidden;padding:52px 0 46px;border-bottom:1px solid var(--line)}
+.hero::before{
+content:"";position:absolute;inset:0;z-index:0;
+background:
+radial-gradient(ellipse at 82% 18%,rgba(198,95,138,.22),transparent 55%),
+radial-gradient(ellipse at 15% 78%,rgba(232,163,61,.13),transparent 60%);
+}
+.hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:1.15fr .85fr;gap:36px;align-items:center}
+.hero .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.8rem;letter-spacing:.14em;color:var(--main);text-transform:uppercase;margin-bottom:14px}
+.hero .eyebrow::before{content:"";width:26px;height:1px;background:var(--main)}
+.hero h1{color:#fff}
+.hero h1 em{font-style:normal;color:var(--main)}
+.hero-desc{color:var(--muted);max-width:46ch}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:11px 22px;font-size:.92rem;font-weight:600;transition:transform .18s ease}
+.btn:hover{transform:translateY(-2px);text-decoration:none}
+.btn-primary{background:var(--main);color:#241a2e}
+.btn-primary:hover{background:var(--main-soft)}
+.btn-ghost{border:1px solid var(--line);color:var(--text);background:rgba(36,26,46,.6)}
+.btn-ghost:hover{border-color:var(--main)}
+.hero-stats{display:flex;gap:22px;margin-top:28px;flex-wrap:wrap}
+.hero-stats div{font-size:.8rem;color:var(--dim)}
+.hero-stats b{display:block;font-size:1.3rem;color:var(--main-soft);line-height:1.2}
+/* 首屏原创视觉 */
+.hero-art{position:relative;aspect-ratio:1/1;max-width:420px;justify-self:center;width:100%}
+.hero-art svg{width:100%;height:100%;display:block}
+.art-ring{animation:spin 26s linear infinite;transform-origin:200px 200px}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){
+html{scroll-behavior:auto}
+.art-ring{animation:none}
+.btn:hover{transform:none}
+}
+/* 网格 */
+.grid{display:grid;gap:18px}
+.g-3{grid-template-columns:repeat(3,1fr)}
+.g-2{grid-template-columns:repeat(2,1fr)}
+.card{
+background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:20px;
+display:flex;flex-direction:column;gap:10px;
+}
+.card h3{margin:0;font-size:1.02rem}
+.card p{margin:0;color:var(--muted);font-size:.9rem}
+.card .meta{font-size:.78rem;color:var(--dim);margin-top:auto}
+.card .cover{width:100%;height:150px;object-fit:cover;border-radius:var(--radius-sm);border:1px solid var(--line)}
+/* 紧凑列表 */
+.list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0}
+.list li{
+display:flex;gap:14px;padding:14px 0;border-bottom:1px dashed var(--line);align-items:baseline;
+}
+.list li:last-child{border-bottom:0}
+.list .date{font-variant-numeric:tabular-nums;font-size:.8rem;color:var(--main);flex:none;width:64px;font-weight:600}
+.list .txt{font-size:.93rem;color:var(--muted)}
+.list .txt strong{color:var(--text);font-weight:600}
+/* 标签索引 */
+.tags{display:flex;flex-wrap:wrap;gap:10px}
+.tags a{
+border:1px solid var(--line);background:var(--panel);border-radius:var(--radius-sm);
+padding:9px 14px;font-size:.9rem;color:var(--text);display:flex;gap:8px;align-items:center;
+}
+.tags a:hover{border-color:var(--main);text-decoration:none}
+.tags a span{font-size:.76rem;color:var(--dim)}
+/* 深度解析 */
+.article{
+background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:clamp(20px,3vw,38px);
+}
+.article h3{margin-top:1.6em;padding-top:.2em;color:var(--main-soft);border-top:1px solid var(--line);padding-top:1em}
+.article h3:first-of-type{margin-top:.4em;border-top:0;padding-top:0}
+.article p{color:#d9cfe4}
+.article .judge{
+border-left:3px solid var(--accent);padding:2px 0 2px 16px;margin:1.2em 0;color:var(--text);font-weight:600;
+}
+/* 对照面板 */
+.panel{
+background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;
+}
+.panel .panel-head{padding:16px 20px;border-bottom:1px solid var(--line);font-weight:700;font-size:.98rem}
+.panel .panel-head.con{color:var(--ok)}
+.panel .panel-head.pro{color:var(--warn)}
+.panel ul{list-style:none;padding:16px 20px;margin:0;display:flex;flex-direction:column;gap:10px}
+.panel li{font-size:.9rem;color:var(--muted);padding-left:18px;position:relative}
+.panel li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;border-radius:2px;background:var(--main);transform:rotate(45deg)}
+/* 编号步骤 */
+.steps{list-style:none;padding:0;margin:0;counter-reset:step;display:flex;flex-direction:column;gap:14px}
+.steps li{
+position:relative;padding:16px 18px 16px 62px;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+counter-increment:step;
+}
+.steps li::before{
+content:counter(step,decimal-leading-zero);
+position:absolute;left:16px;top:14px;font-size:.9rem;font-weight:700;color:var(--main);
+border:1px solid var(--main);width:32px;height:32px;border-radius:8px;display:grid;place-items:center;
+}
+.steps li b{display:block;color:var(--text);margin-bottom:2px;font-size:.95rem}
+.steps li span{color:var(--muted);font-size:.88rem}
+/* 时间线 */
+.timeline{list-style:none;padding:0;margin:0;position:relative;padding-left:26px}
+.timeline::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:2px;background:var(--line)}
+.timeline li{position:relative;padding:0 0 20px 0}
+.timeline li::before{content:"";position:absolute;left:-25px;top:.55em;width:11px;height:11px;border-radius:50%;background:var(--bg);border:2px solid var(--main)}
+.timeline .t-date{font-size:.78rem;color:var(--main);font-weight:600;letter-spacing:.03em}
+.timeline .t-body{color:var(--muted);font-size:.92rem}
+.timeline .t-body strong{color:var(--text)}
+/* FAQ */
+.faq{display:flex;flex-direction:column;gap:10px}
+details{
+background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-sm);
+padding:0;overflow:hidden;
+}
+details summary{
+cursor:pointer;padding:15px 18px;font-weight:600;font-size:.95rem;list-style:none;
+display:flex;justify-content:space-between;gap:12px;align-items:center;
+}
+details summary::-webkit-details-marker{display:none}
+details summary:focus-visible{outline:2px solid var(--main);outline-offset:-2px}
+details summary::after{content:"+";color:var(--main);font-size:1.2rem;line-height:1;flex:none}
+details[open] summary::after{content:"–"}
+details .ans{padding:0 18px 16px;color:var(--muted);font-size:.9rem}
+/* 评论 */
+.comments{display:grid;gap:14px;grid-template-columns:repeat(2,1fr)}
+.comment{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px}
+.comment .who{display:flex;gap:8px;align-items:center;font-size:.82rem;color:var(--dim);margin-bottom:6px}
+.comment .who b{color:var(--main-soft);font-weight:600}
+.comment .avatar{width:24px;height:24px;border-radius:50%;background:var(--panel-2);display:grid;place-items:center;font-size:.72rem;color:var(--main);border:1px solid var(--line)}
+.comment p{margin:0;font-size:.9rem;color:var(--muted)}
+.comment.neg p{color:#d5b6bf}
+/* 引语卡 */
+.quote{
+background:linear-gradient(135deg,var(--panel-2),var(--panel));
+border:1px solid var(--line);border-radius:var(--radius);padding:26px;position:relative;
+}
+.quote::before{content:"“";position:absolute;top:6px;left:18px;font-size:3rem;color:var(--main);opacity:.4;font-family:Georgia,serif}
+.quote p{margin:0 0 10px;color:var(--text);font-size:1rem;padding-left:8px}
+.quote cite{font-style:normal;color:var(--dim);font-size:.82rem;padding-left:8px}
+/* 相关推荐标签 */
+.rel-cloud{display:flex;flex-wrap:wrap;gap:10px}
+.rel-cloud a{
+background:rgba(232,163,61,.08);border:1px solid rgba(232,163,61,.3);border-radius:999px;
+padding:7px 14px;font-size:.86rem;color:var(--main-soft);
+}
+.rel-cloud a:hover{background:rgba(232,163,61,.16);text-decoration:none}
+/* 相关资讯 双栏列表 */
+.news-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 30px}
+.news-item{padding:14px 0;border-bottom:1px dashed var(--line)}
+.news-item .k{font-size:.76rem;color:var(--accent);letter-spacing:.04em}
+.news-item h3{font-size:.95rem;margin:4px 0 4px}
+.news-item p{font-size:.85rem;color:var(--muted);margin:0}
+/* 页尾 */
+.site-foot{border-top:1px solid var(--line);background:var(--bg-soft);padding:44px 0 26px;margin-top:20px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:28px}
+.foot-brand{display:flex;flex-direction:column;gap:12px}
+.foot-brand .brand-name{font-size:1.05rem}
+.foot-brand p{font-size:.86rem;color:var(--dim);margin:0;max-width:28ch}
+.foot-col h4{font-size:.86rem;color:var(--text);margin:0 0 12px;letter-spacing:.04em}
+.foot-col ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+.foot-col a{font-size:.85rem;color:var(--muted)}
+.foot-note{font-size:.78rem;color:var(--dim);margin-top:30px;border-top:1px solid var(--line);padding-top:18px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+/* 回到顶部 */
+#toTop{
+position:fixed;right:18px;bottom:22px;z-index:80;
+width:44px;height:44px;border-radius:50%;
+background:var(--main);color:#241a2e;border:0;cursor:pointer;
+display:grid;place-items:center;font-size:1rem;font-weight:700;
+box-shadow:var(--shadow);
+opacity:0;pointer-events:none;transform:translateY(10px);transition:opacity .2s,transform .2s;
+}
+#toTop.show{opacity:1;pointer-events:auto;transform:none}
+#toTop:focus-visible{outline:2px solid #fff;outline-offset:2px}
+/* 响应式 */
+@media (max-width:900px){
+.hero .wrap{grid-template-columns:1fr}
+.hero-art{max-width:300px;order:-1}
+.g-3{grid-template-columns:repeat(2,1fr)}
+.g-2{grid-template-columns:1fr}
+.comments{grid-template-columns:1fr}
+.foot-grid{grid-template-columns:1fr 1fr}
+.news-grid{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+.nav{display:none;width:100%;flex-direction:column;margin-left:0;padding-top:8px}
+.nav.open{display:flex}
+.nav a{border:1px solid var(--line);border-radius:var(--radius-sm)}
+.menu-btn{display:inline-block;margin-left:auto}
+.head-actions{width:100%;order:5}
+.search{flex:1}
+.search input{width:100%}
+.g-3{grid-template-columns:1fr}
+.foot-grid{grid-template-columns:1fr}
+.hero{padding:34px 0}
+.announce .wrap{font-size:.8rem}
+.announce a{margin-left:0}
+}
+@media (max-width:380px){
+h1{font-size:1.55rem}
+.list .date{width:56px}
+}
+</style>
+<script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+</head>
+<body>
+
+<!-- 吸顶公告条 -->
+<div class="announce">
+<div class="wrap">
+<span class="dot" aria-hidden="true"></span>
+<span><strong>11月7日更新</strong>：新增“脚心敏感度分级表”与“限时挑战 90 秒规则卡”，同步调整刑房难度档位说明。</span>
+<a href="/#latest">查看本次更新条目 →</a>
+</div>
+</div>
+
+<!-- 吸顶页头 -->
+<header class="site-head">
+<div class="wrap head-inner">
+<a class="brand" href="/#top" aria-label="返回首页顶部">
+<svg width="34" height="34" viewBox="0 0 64 64" role="img" aria-hidden="true">
+<rect width="64" height="64" rx="14" fill="#241a2e" stroke="#3d3050"/>
+<path d="M20 18c8-4 22-3 26 8 3 8-2 18-9 22-6 3-13 2-16-3-3-6 0-11 4-15 5-5 9-9 5-13-3-3-7-1-10 1z" fill="#e8a33d"/>
+<circle cx="42" cy="22" r="2.6" fill="#fff"/>
+<path d="M30 30l4 3 4-3" stroke="#241a2e" stroke-width="2" fill="none" stroke-linecap="round"/>
+</svg>
+<span class="brand-name">挠脚心tk恶魔刑房</span>
+</a>
+<button class="menu-btn" type="button" id="menuBtn" aria-expanded="false" aria-controls="mainNav">菜单</button>
+<nav class="nav" id="mainNav" aria-label="主题导航">
+<a href="/#overview">玩法概览</a>
+<a href="/#picks">精选挑战</a>
+<a href="/#latest">最新更新</a>
+<a href="/#channels">分类入口</a>
+<a href="/#deep">深度解析</a>
+<a href="/#guide">体验指南</a>
+<a href="/#faq">常见问答</a>
+</nav>
+<div class="head-actions">
+<form class="search" role="search" id="searchForm" onsubmit="return false;">
+<label for="q" class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">站内搜索</label>
+<input id="q" type="search" placeholder="搜挑战、规则、名词" autocomplete="off">
+<button type="button" id="searchBtn">查找</button>
+</form>
+</div>
+<div class="search-feedback" id="searchFeedback" role="status" aria-live="polite"></div>
+</div>
+</header>
+
+<main id="top">
+
+<!-- 首屏 -->
+<section class="hero" aria-labelledby="heroTitle">
+<div class="wrap">
+<div>
+<span class="eyebrow">互动玩法 · 规则拆解</span>
+<h1 id="heroTitle">挠脚心tk恶魔刑房</h1>
+<p class="hero-desc">以脚心敏感带为核心变量的情景互动玩法库。收录 12 个挑战场景、4 档难度规则与 36 条玩家实测记录，把“怕痒”拆成可测量的反应区间，让组织者和参与者都能提前知道每一档会到什么程度。</p>
+<div class="hero-cta">
+<a class="btn btn-primary" href="/#picks">进入精选挑战</a>
+<a class="btn btn-ghost" href="/#guide">先看体验指南</a>
+</div>
+<div class="hero-stats">
+<div><b>12</b>个挑战场景</div>
+<div><b>4</b>档难度分级</div>
+<div><b>36</b>条实测记录</div>
+<div><b>90s</b>单轮限时</div>
+</div>
+</div>
+<div class="hero-art" aria-hidden="true">
+<svg viewBox="0 0 400 400" role="img" aria-label="刑房主题抽象构图：同心环、脚掌轮廓与刻度">
+<defs>
+<radialGradient id="g1" cx="50%" cy="45%" r="60%">
+<stop offset="0%" stop-color="#3a2333"/>
+<stop offset="100%" stop-color="#140f1c"/>
+</radialGradient>
+</defs>
+<rect x="20" y="20" width="360" height="360" rx="40" fill="url(#g1)" stroke="#3d3050"/>
+<g class="art-ring" fill="none" stroke="#c65f8a" stroke-opacity=".5" stroke-width="1.5" stroke-dasharray="4 10">
+<circle cx="200" cy="200" r="150"/>
+<circle cx="200" cy="200" r="118" stroke="#e8a33d" stroke-opacity=".35" stroke-dasharray="2 14"/>
+</g>
+<g fill="none" stroke="#e8a33d" stroke-width="2.4" stroke-linecap="round">
+<path d="M150 110c22-14 62-12 78 18 14 26 8 70-8 98-14 24-40 38-60 30-18-8-24-28-20-48 4-22 20-38 26-56 5-16 0-30-10-34-6-2-10-2-16 2"/>
+<path d="M132 150c4-6 10-8 14-6" stroke-width="2"/>
+<path d="M128 178c4-6 10-9 16-7" stroke-width="2"/>
+<path d="M128 206c4-6 11-9 17-7" stroke-width="2"/>
+<path d="M134 234c4-6 11-8 16-6" stroke-width="2"/>
+</g>
+<g fill="#e8a33d">
+<circle cx="214" cy="128" r="4"/>
+<circle cx="196" cy="150" r="3" fill="#c65f8a"/>
+<circle cx="238" cy="182" r="3"/>
+</g>
+<g stroke="#6fbf9a" stroke-width="2" opacity=".8">
+<line x1="90" y1="320" x2="310" y2="320"/>
+<line x1="110" y1="314" x2="110" y2="326"/>
+<line x1="160" y1="314" x2="160" y2="326"/>
+<line x1="210" y1="314" x2="210" y2="326"/>
+<line x1="260" y1="314" x2="260" y2="326"/>
+</g>
+<text x="90" y="348" font-family="PingFang SC,sans-serif" font-size="13" fill="#b3a4c4">敏感度刻度 0—10</text>
+</svg>
+</div>
+</div>
+</section>
+
+<!-- 领域概览 -->
+<section class="section" id="overview" aria-labelledby="h-overview">
+<div class="wrap">
+<div class="sec-head">
+<span class="tag">概览</span>
+<h2 id="h-overview">这套玩法在讲什么</h2>
+<span class="sub">从场景设定到反应记录的三层结构</span>
+</div>
+<p class="lead">“恶魔刑房”是组织者对一类固定情景玩法的称呼：布置一个带约束和倒计时的场景，用羽毛、软刷、指腹对脚心、脚趾缝、足弓进行刺激，记录参与者的反应时长与强度。它更接近桌面游戏里的“难度副本”，核心变量是脚心敏感带位置、刺激节奏和停手时机，与具体器材关系不大。</p>
+<div class="grid g-3">
+<article class="card">
+<h3>场景层：刑房是怎么布置的</h3>
+<p>常见配置为靠椅、软垫、计时器、三种以上刺激道具与一张反应记录卡。空间要求安静、可随时中止，光线不超过 300 勒克斯，避免强光造成紧张叠加。</p>
+</article>
+<article class="card">
+<h3>规则层：一轮 90 秒</h3>
+<p>单轮默认 90 秒，分 3 段，每段 30 秒，段间停手 10 秒用于记录。停手权始终归被刺激方，喊停即结束，不计入成绩。</p>
+</article>
+<article class="card">
+<h3>记录层：敏感度怎么记</h3>
+<p>用 0—10 刻度标注五个足部区域，每次挑战后由参与者自评，组织者记录首次笑出声的时间点与持续忍耐时长，形成可对比的个人曲线。</p>
+</article>
+</div>
+</div>
+</section>
+
+<!-- 精选内容推荐 -->
+<section class="section" id="picks" aria-labelledby="h-picks">
+<div class="wrap">
+<div class="sec-head">
+<span class="tag">精选</span>
+<h2 id="h-picks">本周精选挑战</h2>
+<span class="sub">按反馈热度与规则完成度挑选</span>
+</div>
+<div class="grid g-3">
+<article class="card">
+<img class="cover" src="https://picsum.photos/seed/demonroom01/640/360" width="640" height="360" loading="lazy" alt="暗色调房间内摆放靠椅与软垫的刑房布景示意">
+<h3>足弓三连刷 · 中级</h3>
+<p>软刷沿足弓从内到外单向扫过，30 秒内完成 9 次，中途不换道具。11 月 5 日 8 名参与者里 6 人在第 4 次后出现明显缩脚。</p>
+<span class="meta">规则完整度 94% · 平均忍耐 42 秒</span>
+</article>
+<article class="card">
+<img class="cover" src="https://picsum.photos/seed/toefeathers/640/360" width="640" height="360" loading="lazy" alt="羽毛道具与脚趾缝刺激区特写示意">
+<h3>脚趾缝羽毛穿插 · 高级</h3>
+<p>羽毛尖端以每秒 2 次的频率在趾缝间来回，配合 10 秒静默。10 月 29 日测试中，仅 2 人完整撑过 90 秒。</p>
+<span class="meta">规则完整度 91% · 平均忍耐 58 秒</span>
+</article>
+<article class="card">
+<img class="cover" src="https://picsum.photos/seed/solemap/640/360" width="640" height="360" loading="lazy" alt="脚心区域划分与敏感度标注记录卡">
+<h3>脚心定位分级 · 入门</h3>
+<p>先做 5 分钟敏感区扫描，再按标注结果选刺激点。适合第一次进入刑房场景的人，11 月 1 日两场共 14 人参与。</p>
+<span class="meta">规则完整度 88% · 平均忍耐 76 秒</span>
+</article>
+</div>
+</div>
+</section>
+
+<!-- 最新更新 -->
+<section class="section" id="latest" aria-labelledby="h-latest">
+<div class="wrap">
+<div class="sec-head">
+<span class="tag">更新</span>
+<h2 id="h-latest">最新更新与规则修订</h2>
+<span class="sub">截至 2026 年 11 月 8 日</span>
+</div>
+<div class="grid g-2">
+<div>
+<ul class="list">
+<li><span class="date">11-07</span><span class="txt"><strong>脚心敏感度分级表 v2</strong> 把原来的 3 档扩为 5 档，新增“足外侧低敏区”，并附 20 例自评对照。</span></li>
+<li><span class="date">11-06</span><span class="txt"><strong>90 秒规则卡</strong> 定稿：3 段 × 30 秒，段间 10 秒记录，停手权写法统一为“口头即生效”。</span></li>
+<li><span class="date">11-04</span><span class="txt"><strong>刑房难度档位</strong> 把“中级”拆成中低、中高两档，原因是 10 月测试里同档反馈差异过大。</span></li>
+<li><span class="date">11-02</span><span class="txt"><strong>道具清单</strong> 移除硬质塑料刷，新增 3 种软毛刷规格说明。</span></li>
+<li><span class="date">10-30</span><span class="txt"><strong>反应记录卡</strong> 增加“首次发笑时间”一栏，用于后续曲线对比。</span></li>
+</ul>
+</div>
+<div class="quote">
+<p>“把停手权写成‘口头即生效’之后，10 月 30 日那场没有一个人因为犹豫而多撑超过 5 秒。规则写得越短，执行越稳。”</p>
+<cite>—— 规则整理者 阿棠，10 月 31 日复盘记录</cite>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 分类入口 -->
+<section class="section" id="channels" aria-labelledby="h-channels">
+<div class="wrap">
+<div class="sec-head">
+<span class="tag">频道</span>
+<h2 id="h-channels">按玩法类型找入口</h2>
+<span class="sub">10 个常用分类，含难度与道具维度</span>
+</div>
+<nav class="tags" aria-label="玩法分类索引">
+<a href="/#picks">脚心敏感度测试 <span>入门</span></a>
+<a href="/#picks">足弓软刷挑战 <span>中级</span></a>
+<a href="/#picks">脚趾缝羽毛 <span>高级</span></a>
+<a href="/#deep">限时 90 秒规则 <span>规则</span></a>
+<a href="/#guide">刑房布置清单 <span>准备</span></a>
+<a href="/#guide">停手权与安全词 <span>安全</span></a>
+<a href="/#latest">难度档位调整 <span>更新</span></a>
+<a href="/#deep">反应记录卡写法 <span>记录</span></a>
+<a href="/#comments">玩家实测反馈 <span>评论</span></a>
+<a href="/#rel">道具规格对照 <span>器材</span></a>
+</nav>
+</div>
+</section>
+
+<!-- 深度解析：唯一主体阅读区 -->
+<section class="section" id="deep" aria-labelledby="h-deep">
+<div class="wrap">
+<div class="sec-head">
+<span class="tag">深度</span>
+<h2 id="h-deep">深度解析：难度不该由道具决定</h2>
+<span class="sub">基于 10 月 27 日至 11 月 6 日的 36 条实测记录</span>
+</div>
+<article class="article">
+<p>10 月 27 日到 11 月 6 日，刑房场景一共记录 36 条完整挑战数据，覆盖 4 档难度、7 种道具。把“平均忍耐时长”和“道具硬度”放在一起看，相关性并不高：硬度最高的硬质塑料刷平均忍耐 51 秒，反而高于软毛刷的 44 秒。真正拉开差距的是刺激点位置和节奏变化。</p>
+
+<h3>判断一：足弓内侧比脚趾缝更“难撑”，但只在低速时成立</h3>
+<p>同一个组织者、同一批 8 人，在 11 月 3 日做了两组对照：A 组软刷以每秒 1 次扫足弓内侧，B 组羽毛以每秒 2 次扫脚趾缝。A 组平均忍耐 47 秒，B 组 39 秒。把 A 组频率提到每秒 2 次后，平均忍耐降到 33 秒，反超 B 组。可见“哪里更怕痒”并不是固定结论，频率一变，排名就换位。把足弓写成“最高敏感区”而忽略节奏，是记录卡里最常见的误标。</p>
+<p class="judge">可引用的判断：在 90 秒规则下，刺激频率对忍耐时长的影响大于刺激部位；同部位提速 1 倍，平均忍耐下降约 30%。</p>
+
+<h3>判断二：停手 10 秒的记录段会拉高下一段的忍耐</h3>
+<p>规则卡里的段间 10 秒，原本只是留给记录，但 11 月 1 日两场共 14 人的数据显示，第二段平均忍耐比第一段长 8 秒，第三段又回落 3 秒。组织者陈默在复盘里写：“中途停一下，人会把注意力从脚上挪开，再回来时敏感度反而钝了一点。”这说明 90 秒规则本身在改变测量结果，不同场景若去掉记录段，数据不能直接比较。</p>
+
+<h3>判断三：入门档的实际强度被高估了</h3>
+<p>“入门”在 10 月的旧规则里仍包含趾缝刺激，10 月 29 日 6 名首次参与者中 4 人在 30 秒内喊停。11 月 4 日拆分档位后，入门档只保留脚心外缘与足跟，11 月 6 日 5 人全部撑满 90 秒。旧档位名称给人的预期与实际反应差了一整档，这是本次调整的直接原因，不是玩法变简单了。</p>
+
+<h3>判断四：自评敏感度与实测耐力只有弱相关</h3>
+<p>36 条记录里，自评“很怕痒”（8—10 分）的 11 人，平均忍耐 46 秒；自评“中等”（4—7 分）的 18 人，平均忍耐 49 秒，两组只差 3 秒。反倒是自评 0—3 分的 7 人里有 2 人在 20 秒内喊停。组织者周野的说法是：“怕不怕痒和能不能忍是两件事，前者是感觉强度，后者是反应控制。”现有记录卡把两者合在一栏，后续需要拆开。</p>
+
+<h3>判断五：器材叙述里的“恶魔级”没有统一标准</h3>
+<p>商品描述里常见的“恶魔级刺激”至少对应三种不同规格：羽毛硬度、刷毛长度、接触面积，彼此没有换算关系。10 月 30 日对比的 3 款软毛刷，刷毛长度从 8 毫米到 22 毫米，同一人在同一部位的平均忍耐从 62 秒到 35 秒不等。转述这类描述时应附规格，否则“恶魔级”只是一句情绪词，不能进对比表。</p>
+<p class="judge">可被反驳的点：有人认为敏感度是个人体质常数，训练可提升忍耐。现有 36 条数据不足以支持“训练有效”，因为同一个人重复挑战的记录只有 5 条，且间隔都在 3 天内，无法排除熟悉效应。</p>
+</article>
+</div>
+</section>
+
+<!-- 体验指南：编号步骤 -->
+<section class="section" id="guide" aria-labelledby="h-guide">
+<div class="wrap">
+<div class="sec-head">
+<span class="tag">指南</span>
+<h2 id="h-guide">第一次进场怎么做</h2>
+<span class="sub">五步流程，每步都有可核对动作</span>
+</div>
+<div class="grid g-2">
+<ol class="steps">
+<li><b>先做敏感区扫描，不急着上道具</b><span>用指腹在脚心、足弓、足跟、趾缝各停留 5 秒，请对方报 0—10 分，写在记录卡上。全程不超过 5 分钟。</span></li>
+<li><b>确认停手方式并复述一遍</b><span>口头喊停即生效，不需要特定词汇。组织者需当场复述，避免“以为还要再坚持一下”的误会。</span></li>
+<li><b>按自评结果选起点档位</b><span>自评 0—3 分从入门档起，4—7 分从中低档起，8 分以上才考虑中高档。首轮不建议直接进高级。</span></li>
+<li><b>执行 90 秒规则卡</b><span>3 段各 30 秒，段间停手 10 秒记录首次发笑时间与缩脚次数，全程一人计时一人记录。</span></li>
+<li><b>结束后 10 分钟内复盘</b><span>对照记录卡看哪一段掉得最快，把结果写进个人曲线。同一人两次挑战至少间隔 48 小时。</span></li>
+</ol>
+<aside class="panel">
+<div class="panel-head con">安全边界：必须提前确认</div>
+<ul>
+<li>皮肤有破损、湿疹、真菌感染时不做足部刺激。</li>
+<li>踝关节旧伤者避免强制固定，改用可随时抽离的软带。</li>
+<li>场景内保留一条无遮挡的起身通道，宽度不少于 60 厘米。</li>
+<li>计时器声音可关闭，避免制造额外紧张。</li>
+<li>每轮结束后检查足部皮肤是否发红超过 15 分钟未退。</li>
+</ul>
+</aside>
+</div>
+</div>
+</section>
+
+<!-- 对照面板：道具规格 -->
+<section class="section" id="rel" aria-labelledby="h-rel">
+<div class="wrap">
+<div class="sec-head">
+<span class="tag">对照</span>
+<h2 id="h-rel">道具规格对照与相关推荐</h2>
+<span class="sub">左侧为常见误用，右侧为按规格选用的做法</span>
+</div>
+<div class="grid g-2">
+<div class="panel">
+<div class="panel-head pro">常见误用</div>
+<ul>
+<li>把“恶魔级”当作统一强度标签，跨品牌直接比较。</li>
+<li>用硬质塑料刷处理趾缝，10 月 27 日有 2 例皮肤泛红超过 20 分钟。</li>
+<li>只按道具选难度，忽略频率与停手间隔。</li>
+<li>记录卡只写“很痒”，没有时间点与部位。</li>
+</ul>
+</div>
+<div class="panel">
+<div class="panel-head con">按规格选用</div>
+<ul>
+<li>记录刷毛长度、接触面积、频率三项，再做对比。</li>
+<li>趾缝只用羽毛或软毛尖，单次不超过 15 秒。</li>
+<li>同档位内先固定频率，再换部位做对照。</li>
+<li>记录卡写首次发笑时间、缩脚次数、喊停秒数。</li>
+</ul>
+</div>
+</div>
+<div class="rel-cloud" style="margin-top:22px" aria-label="相关推荐标签">
+<a href="/#picks">脚心敏感度分级表</a>
+<a href="/#picks">足弓软刷 30 秒挑战</a>
+<a href="/#deep">90 秒规则卡写法</a>
+<a href="/#guide">停手权安全词模板</a>
+<a href="/#latest">刑房难度档位调整</a>
+<a href="/#comments">反应记录卡实测反馈</a>
+<a href="/#rel">软毛刷规格对照</a>
+</div>
+</div>
+</section>
+
+<!-- 时间线：事件只在此出现一次 -->
+<section class="section" id="timeline" aria-labelledby="h-timeline">
+<div class="wrap">
+<div class="sec-head">
+<span class="tag">时间线</span>
+<h2 id="h-timeline">规则演变节点</h2>
+<span class="sub">按修订日期排列</span>
+</div>
+<ul class="timeline">
+<li><span class="t-date">10 月 24 日</span><span class="t-body"><strong>首版难度档位发布</strong>，分入门、中级、高级三档，中级未再细分。</span></li>
+<li><span class="t-date">10 月 29 日</span><span class="t-body"><strong>首次高级档测试</strong>，6 人中 4 人在趾缝段 30 秒内喊停，触发档位重估。</span></li>
+<li><span class="t-date">11 月 1 日</span><span class="t-body"><strong>两场入门场共 14 人</strong>，记录段带来第二段耐力拉长的现象被首次标注。</span></li>
+<li><span class="t-date">11 月 4 日</span><span class="t-body"><strong>中级拆分</strong>为中低、中高两档，入门档移除趾缝刺激。</span></li>
+<li><span class="t-date">11 月 6 日</span><span class="t-body"><strong>五档新规则首测</strong>，5 名首次参与者全部撑满 90 秒。</span></li>
+</ul>
+</div>
+</section>
+
+<!-- 相关资讯：双栏 -->
+<section class="section" id="news" aria-labelledby="h-news">
+<div class="wrap">
+<div class="sec-head">
+<span class="tag">资讯</span>
+<h2 id="h-news">近期相关动态</h2>
+<span class="sub">条目、规则与线下场景的简短记录</span>
+</div>
+<div class="news-grid">
+<div>
+<article class="news-item">
+<span class="k">规则 · 11-07</span>
+<h3>段间记录时间拟从 10 秒延长到 15 秒</h3>
+<p>提案理由是记录卡填写偏慢，反对意见是延时会改变第二轮耐力。11 月 8 日晚将做小样本对照。</p>
+</article>
+<article class="news-item">
+<span class="k">场景 · 11-05</span>
+<h3>靠椅固定方式改为可抽离软带</h3>
+<p>原方案为卡扣束缚，11 月 5 日场次起统一换成魔术贴软带，测试者可在 2 秒内自行脱离。</p>
+</article>
+<article class="news-item">
+<span class="k">道具 · 11-03</span>
+<h3>三款软毛刷完成同部位对照</h3>
+<p>刷毛 8mm、15mm、22mm 在足弓内侧的平均忍耐分别为 62、51、35 秒，规格表已更新。</p>
+</article>
+</div>
+<div>
+<article class="news-item">
+<span class="k">记录 · 11-02</span>
+<h3>反应记录卡新增“缩脚次数”栏</h3>
+<p>此前只记首次发笑时间，漏掉了中途的肢体反应，修订后每 30 秒统计一次。</p>
+</article>
+<article class="news-item">
+<span class="k">参与 · 10-31</span>
+<h3>10 月共完成 21 场，参与 63 人次</h3>
+<p>其中首次参与 38 人次，撑满 90 秒的比例为 41%，低于组织方预期。</p>
+</article>
+<article class="news-item">
+<span class="k">说法 · 10-28</span>
+<h3>“怕痒的人忍不了 30 秒”缺乏支撑</h3>
+<p>原说法来自外部转述，现有 36 条记录中自评高分者最长忍耐 88 秒，暂不采纳为规则依据。</p>
+</article>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 用户评论 -->
+<section class="section" id="comments" aria-labelledby="h-comments">
+<div class="wrap">
+<div class="sec-head">
+<span class="tag">反馈</span>
+<h2 id="h-comments">参与者怎么说</h2>
+<span class="sub">来自 10 月 27 日至 11 月 6 日的现场记录</span>
+</div>
+<div class="comments">
+<article class="comment">
+<div class="who"><span class="avatar">林</span><b>林小满</b> · 11-06 入门场</div>
+<p>足跟那段几乎没感觉，趾缝才是真难顶。入门档把趾缝拿掉之后确实好过多了，但也就少了点挑战味道。</p>
+</article>
+<article class="comment neg">
+<div class="who"><span class="avatar">周</span><b>周野</b> · 11-03 中低场</div>
+<p>软毛刷 22mm 那款写着“温和”，实际扫足弓时比 8mm 的更扛不住。规格表原来那栏写得太想当然了。</p>
+</article>
+<article class="comment">
+<div class="who"><span class="avatar">陈</span><b>陈默</b> · 11-01 入门场</div>
+<p>停手 10 秒真的很关键。第二段明显没那么敏感，回来还能继续。就是记录员手忙脚乱，第一次记漏了缩脚次数。</p>
+</article>
+<article class="comment neg">
+<div class="who"><span class="avatar">阿</span><b>阿棠</b> · 10-29 高级场</div>
+<p>高级档 30 秒内就喊停了，不是怕痒，是羽毛扫趾缝的频率太快，像有人在挠手心，注意力全散了。规则卡没提这个。</p>
+</article>
+<article class="comment">
+<div class="who"><span class="avatar">许</span><b>许知</b> · 11-05 中高场</div>
+<p>自评 9 分，实测撑了 74 秒。感觉强度和忍耐真的是两回事，记录卡把两项合在一起不太合理。</p>
+</article>
+<article class="comment">
+<div class="who"><span class="avatar">吴</span><b>吴一苇</b> · 11-06 入门场</div>
+<p>第一次来，看完敏感区扫描那段才敢下场。先摸一遍再选点，比直接上去被挠稳多了。</p>
+</article>
+</div>
+</div>
+</section>
+
+<!-- FAQ -->
+<section class="section" id="faq" aria-labelledby="h-faq">
+<div class="wrap">
+<div class="sec-head">
+<span class="tag">问答</span>
+<h2 id="h-faq">常见问答</h2>
+<span class="sub">关于规则、敏感度与安全的 8 个问题</span>
+</div>
+<div class="faq">
+<details>
+<summary>脚心敏感度分级表怎么用？</summary>
+<div class="ans">先做 5 分钟敏感区扫描，用 0—10 分标注脚心、足弓、足跟、趾缝、足外侧五处，再按最高分区域对应档位。11 月 7 日的 v2 版把足外侧单列为低敏区，原因是 10 月记录里该处平均自评只有 2.4 分，混在足弓里会拉低整体判断。</div>
+</details>
+<details>
+<summary>90 秒规则卡里的三段为什么必须停手 10 秒？</summary>
+<div class="ans">这 10 秒用来记录首次发笑时间与缩脚次数。11 月 1 日的 14 人数据显示，停手后第二段平均忍耐比第一段长 8 秒，说明记录段本身会影响结果。若去掉记录段，不同场景的数据就不能直接相比。</div>
+</details>
+<details>
+<summary>刑房场景的停手权怎么确认才不算含糊？</summary>
+<div class="ans">口头喊停即生效，组织者需要在开始前复述一遍，并确认对方听到了。11 月 6 日之后的场次还要求把这句话写进每次开场的固定流程，不依赖参与者自己记住规则。</div>
+</details>
+<details>
+<summary>足弓软刷挑战为什么分中低和中高两档？</summary>
+<div class="ans">原中级档内反馈差异过大：同样的软刷，10 月 29 日有人 20 秒喊停，也有人撑满 90 秒。11 月 4 日按刷毛长度与频率拆成两档，中低档限定刷毛 15 毫米以内、每秒 1 次，中高档才允许提速。</div>
+</details>
+<details>
+<summary>趾缝刺激为什么单列为高级？</summary>
+<div class="ans">趾缝皮肤薄、缝隙窄，刺激容易集中。10 月 29 日的测试中 6 人里 4 人在 30 秒内喊停，平均忍耐 39 秒，低于足弓的 47 秒。11 月 4 日起趾缝刺激从入门档移除，只在高级档保留，且单次不超过 15 秒。</div>
+</details>
+<details>
+<summary>敏感度自评和实测忍耐时长是什么关系？</summary>
+<div class="ans">相关性弱。36 条记录里，自评 8—10 分者平均忍耐 46 秒，自评 4—7 分者 49 秒，只差 3 秒。前者是感觉强度，后者是反应控制，现有记录卡把两者合在一栏，后续会拆开统计。</div>
+</details>
+<details>
+<summary>道具描述里的“恶魔级”能作为难度依据吗？</summary>
+<div class="ans">不能直接当依据。这个词至少对应刷毛长度、羽毛硬度、接触面积三种不同规格，彼此没有换算关系。10 月 30 日对比的三款软毛刷，刷毛从 8 毫米到 22 毫米，同一人平均忍耐差 27 秒。比较时应附具体规格。</div>
+</details>
+<details>
+<summary>足部有旧伤还能参与吗？</summary>
+<div class="ans">踝关节旧伤者不采用强制固定，改用可随时抽离的软带；皮肤有破损、湿疹或真菌感染时不做足部刺激。场次结束后需检查皮肤发红是否在 15 分钟内退去，未退则当次记录作废。</div>
+</details>
+</div>
+</div>
+</section>
+
+<!-- 补充板块：可信度分层 -->
+<section class="section" id="trust" aria-labelledby="h-trust">
+<div class="wrap">
+<div class="sec-head">
+<span class="tag">可信度</span>
+<h2 id="h-trust">信息分层：哪些能直接用，哪些要打问号</h2>
+<span class="sub">按来源与可核对程度分三层</span>
+</div>
+<div class="grid g-3">
+<article class="card">
+<h3 style="color:var(--ok)">可核对：现场记录</h3>
+<p>36 条完整挑战记录、11 月 1 日两场 14 人数据、10 月 30 日三款软毛刷同部位对照，均有日期、人数、秒数与参与人代号。</p>
+<span class="meta">可直接引用，附日期即可</span>
+</article>
+<article class="card">
+<h3 style="color:var(--main)">需注明：组织者转述</h3>
+<p>“停手后注意力会挪开”来自陈默 10 月 31 日复盘，属个人观察，36 条数据支持趋势但样本仅 14 人。</p>
+<span class="meta">引用时注明发言人与日期</span>
+</article>
+<article class="card">
+<h3 style="color:var(--warn)">暂不采纳：外部说法</h3>
+<p>“怕痒的人忍不了 30 秒”来自外部转述，无原始出处。现有记录里自评高分者最长忍耐 88 秒，与该说法冲突。</p>
+<span class="meta">仅作讨论，不作规则依据</span>
+</article>
+</div>
+</div>
+</section>
+
+</main>
+
+<!-- 页尾 -->
+<footer class="site-foot">
+<div class="wrap">
+<div class="foot-grid">
+<div class="foot-brand">
+<a class="brand" href="/#top" aria-label="返回顶部">
+<svg width="30" height="30" viewBox="0 0 64 64" role="img" aria-hidden="true">
+<rect width="64" height="64" rx="14" fill="#241a2e" stroke="#3d3050"/>
+<path d="M20 18c8-4 22-3 26 8 3 8-2 18-9 22-6 3-13 2-16-3-3-6 0-11 4-15 5-5 9-9 5-13-3-3-7-1-10 1z" fill="#e8a33d"/>
+<circle cx="42" cy="22" r="2.6" fill="#fff"/>
+</svg>
+<span class="brand-name">挠脚心tk恶魔刑房</span>
+</a>
+<p>把怕痒拆成可测量的反应区间：12 个场景、4 档规则、36 条记录，先看数据再进场。</p>
+</div>
+<div class="foot-col">
+<h4>玩法入口</h4>
+<ul>
+<li><a href="/#overview">玩法概览</a></li>
+<li><a href="/#picks">精选挑战</a></li>
+<li><a href="/#channels">分类入口</a></li>
+<li><a href="/#timeline">规则时间线</a></li>
+</ul>
+</div>
+<div class="foot-col">
+<h4>规则与安全</h4>
+<ul>
+<li><a href="/#deep">深度解析</a></li>
+<li><a href="/#guide">体验指南</a></li>
+<li><a href="/#faq">常见问答</a></li>
+<li><a href="/#trust">信息分层</a></li>
+</ul>
+</div>
+<div class="foot-col">
+<h4>反馈与动态</h4>
+<ul>
+<li><a href="/#latest">最新更新</a></li>
+<li><a href="/#news">近期动态</a></li>
+<li><a href="/#comments">参与者评论</a></li>
+<li><a href="/#rel">道具对照</a></li>
+</ul>
+</div>
+</div>
+<div class="foot-note">
+<span>页面内条目、人次与秒数均为示例数据，用于说明规则结构，不代表真实场次。</span>
+<span>更新于 2026 年 11 月 8 日 · 对应更新项：敏感度分级表 v2、90 秒规则卡、难度档位拆分</span>
+</div>
+<div class="foot-note" style="border-top:0;padding-top:0">
+<span>© 2026 挠脚心tk恶魔刑房 内容整理</span>
+<span>示例内容 · 请依据个人情况与安全边界参与</span>
+</div>
+</div>
+</footer>
+
+<button id="toTop" type="button" aria-label="回到页面顶部">↑</button>
+
+<script>
+(function(){
+  var menuBtn=document.getElementById('menuBtn');
+  var nav=document.getElementById('mainNav');
+  var toTop=document.getElementById('toTop');
+  var form=document.getElementById('searchForm');
+  var input=document.getElementById('q');
+  var btn=document.getElementById('searchBtn');
+  var fb=document.getElementById('searchFeedback');
+
+  if(menuBtn&&nav){
+    menuBtn.addEventListener('click',function(){
+      var open=nav.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded',open?'true':'false');
+    });
+    nav.addEventListener('click',function(e){
+      if(e.target.tagName==='A'&&window.innerWidth<=640){
+        nav.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded','false');
+      }
+    });
+  }
+
+  if(toTop){
+    var onScroll=function(){
+      if(window.scrollY>500){toTop.classList.add('show');}
+      else{toTop.classList.remove('show');}
+    };
+    window.addEventListener('scroll',onScroll,{passive:true});
+    toTop.addEventListener('click',function(){
+      var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({top:0,behavior:reduce?'auto':'smooth'});
+    });
+    onScroll();
+  }
+
+  function doSearch(){
+    var q=(input.value||'').trim().toLowerCase();
+    if(!q){fb.textContent='请输入要查找的挑战、规则或名词，例如“足弓”“停手权”。';return;}
+    var nodes=document.querySelectorAll('main h3, main h2, main summary, main .card p, main .news-item h3, main .news-item p, main .tags a, main .rel-cloud a');
+    var hits=[];
+    nodes.forEach(function(n){
+      if(n.textContent.toLowerCase().indexOf(q)>-1 && hits.length<6){
+        hits.push(n.textContent.trim().replace(/\s+/g,' ').slice(0,42));
+      }
+    });
+    if(hits.length===0){
+      fb.textContent='没有找到与“'+input.value.trim()+'”相关的条目，可尝试“敏感度”“90秒”“软毛刷”“趾缝”。';
+    }else{
+      fb.textContent='找到 '+hits.length+' 条：'+hits.join('；')+'。';
+    }
+  }
+  if(btn){btn.addEventListener('click',doSearch);}
+  if(form){form.addEventListener('submit',function(e){e.preventDefault();doSearch();});}
+  if(input){input.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();doSearch();}});}
+})();
+</script>
+
+<script type="application/ld+json">
+{
+"@context":"https://schema.org",
+"@type":"WebSite",
+"name":"挠脚心tk恶魔刑房",
+"description":"以脚心敏感带为核心变量的情景互动玩法库，收录挑战场景、难度规则与玩家实测记录。",
+"inLanguage":"zh-CN"
+}
+</script>
+<script type="application/ld+json">
+{
+"@context":"https://schema.org",
+"@type":"FAQPage",
+"mainEntity":[
+{"@type":"Question","name":"脚心敏感度分级表怎么用？","acceptedAnswer":{"@type":"Answer","text":"先做5分钟敏感区扫描，用0—10分标注脚心、足弓、足跟、趾缝、足外侧五处，再按最高分区域对应档位。11月7日的v2版把足外侧单列为低敏区。"}},
+{"@type":"Question","name":"90秒规则卡里的三段为什么必须停手10秒？","acceptedAnswer":{"@type":"Answer","text":"这10秒用来记录首次发笑时间与缩脚次数。11月1日的14人数据显示，停手后第二段平均忍耐比第一段长8秒，说明记录段本身会影响结果。"}},
+{"@type":"Question","name":"刑房场景的停手权怎么确认才不算含糊？","acceptedAnswer":{"@type":"Answer","text":"口头喊停即生效，组织者需要在开始前复述一遍，并确认对方听到，把这句话写进每次开场的固定流程。"}},
+{"@type":"Question","name":"足弓软刷挑战为什么分中低和中高两档？","acceptedAnswer":{"@type":"Answer","text":"原中级档内反馈差异过大，同样软刷有人20秒喊停也有人撑满90秒。11月4日按刷毛长度与频率拆成两档。"}},
+{"@type":"Question","name":"趾缝刺激为什么单列为高级？","acceptedAnswer":{"@type":"Answer","text":"趾缝皮肤薄、缝隙窄，刺激容易集中。10月29日测试中6人里4人在30秒内喊停，平均忍耐39秒。11月4日起只在高级档保留且单次不超过15秒。"}},
+{"@type":"Question","name":"敏感度自评和实测忍耐时长是什么关系？","acceptedAnswer":{"@type":"Answer","text":"相关性弱。36条记录里自评8—10分者平均忍耐46秒，自评4—7分者49秒，只差3秒。前者是感觉强度，后者是反应控制。"}},
+{"@type":"Question","name":"道具描述里的恶魔级能作为难度依据吗？","acceptedAnswer":{"@type":"Answer","text":"不能直接当依据。这个词至少对应刷毛长度、羽毛硬度、接触面积三种规格，彼此没有换算关系，比较时应附具体规格。"}},
+{"@type":"Question","name":"足部有旧伤还能参与吗？","acceptedAnswer":{"@type":"Answer","text":"踝关节旧伤者不采用强制固定，改用可随时抽离的软带；皮肤有破损、湿疹或真菌感染时不做足部刺激，结束后检查皮肤发红是否15分钟内退去。"}}
+]
+}
+</script>
+</body>
+  </html>
